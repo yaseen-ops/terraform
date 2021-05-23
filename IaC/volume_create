@@ -1,0 +1,79 @@
+
+data "aws_ebs_snapshot" "opt_snapshot" {
+  owners      = ["self"]
+  filter {
+    name   = "tag:Name"
+    values = ["OPT"]
+  }
+}
+
+data "aws_ebs_snapshot" "mnt_snapshot" {
+  owners      = ["self"]
+  filter {
+    name   = "tag:Name"
+    values = ["MNT"]
+  }
+}
+
+
+data "aws_ebs_snapshot" "media_snapshot" {
+  owners      = ["self"]
+  filter {
+    name   = "tag:Name"
+    values = ["MEDIA"]
+  }
+}
+
+resource "aws_ebs_volume" "terraform_volume1" {
+  availability_zone = aws_instance.UK.availability_zone
+  encrypted = "true"
+  snapshot_id = data.aws_ebs_snapshot.opt_snapshot.id
+
+  tags = {
+    name = var.ec2_tags[0].name
+    application_id = var.ec2_tags[0].application_id
+    description = var.ec2_tags[0].description
+    created_by = var.ec2_tags[0].created_by
+  }
+}
+
+
+resource "aws_ebs_volume" "terraform_volume2" { 
+  availability_zone = aws_instance.UK.availability_zone
+  encrypted = "true"
+  snapshot_id = data.aws_ebs_snapshot.mnt_snapshot.id
+
+  tags = {
+    name = var.ec2_tags[0].name
+    application_id = var.ec2_tags[0].application_id
+    description = var.ec2_tags[0].description
+    created_by = var.ec2_tags[0].created_by
+  }
+}
+
+resource "aws_ebs_volume" "terraform_volume3" {
+  availability_zone = aws_instance.UK.availability_zone
+  encrypted = "true"
+  snapshot_id = data.aws_ebs_snapshot.media_snapshot.id
+
+  tags = {
+    name = var.ec2_tags[0].name
+    application_id = var.ec2_tags[0].application_id
+    description = var.ec2_tags[0].description
+    created_by = var.ec2_tags[0].created_by
+  }
+}
+
+#resource "null_resource" "mount_envm" {
+#  connection {
+#  host        = aws_instance.UK.public_dns
+#  user        = "ec2-user"
+#  private_key = file("~/.ssh/id_rsa")
+#}
+
+#provisioner "remote-exec" {
+#  inline = [
+#    " sudo mount /dev/xvdh /opt"
+#  ]
+# }
+#}

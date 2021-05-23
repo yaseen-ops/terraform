@@ -1,0 +1,15 @@
+#!/bin/bash
+
+echo failed > /opt/failure.txt
+sleep 90
+mkfs.ext4 /dev/xvdx
+mkfs.ext4 /dev/xvdy
+mkfs.ext4 /dev/xvdz
+
+mount /dev/xvdx /opt
+mount /dev/xvdy /mnt
+mount /dev/xvdz /media
+
+echo hello > /opt/opt.txt
+echo hello > /mnt/mnt.txt
+echo hello > /media/media.txt

@@ -1,0 +1,12 @@
+variable "ec2_vpc_id" {}
+//variable "ip_addr" {}
+variable "subnet_id" {}
+variable "ec2_ami_id" {}
+variable "name" {}
+variable "description" {}
+variable "created_by" {}
+variable "application_id" {}
+//variable "ec2_tags" {}
+//variable "vol1_snapshot" {}
+//variable "vol2_snapshot" {}
+//variable "vol3_snapshot" {}

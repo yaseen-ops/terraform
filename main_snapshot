@@ -1,0 +1,39 @@
+provider "aws" {
+   region = "us-east-1"
+}
+
+resource "aws_ebs_snapshot" "terraform_snapshot1" {
+  volume_id = "vol-0b75c75e9635d3129"
+
+  tags = {
+    Name = "OPT"
+  }
+}
+
+resource "aws_ebs_snapshot" "terraform_snapshot2" {
+  volume_id = "vol-09c072e4303a4fd4c"
+
+  tags = {
+    Name = "MNT"
+  }
+}
+
+resource "aws_ebs_snapshot" "terraform_snapshot3" {
+  volume_id = "vol-073c52dce178e354b"
+
+  tags = {
+    Name = "MEDIA"
+  }
+}
+
+output "snapshot1" {
+  value = aws_ebs_snapshot.terraform_snapshot1.id
+}
+
+output "snapshot2" {
+  value = aws_ebs_snapshot.terraform_snapshot2.id
+}
+
+output "snapshot3" {
+  value = aws_ebs_snapshot.terraform_snapshot3.id
+}

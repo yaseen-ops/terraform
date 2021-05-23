@@ -1,0 +1,14 @@
+sudo mkfs.ext4 /dev/xvdx
+sudo mkfs.ext4 /dev/xvdy
+sudo mkfs.ext4 /dev/xvdz
+
+sudo mount /dev/xvdx /opt
+sudo mount /dev/xvdy /mnt
+sudo mount /dev/xvdz /media
+
+sudo chmod -R 777 /opt
+sudo chmod -R 777 /mnt
+sudo chmod -R 777 /media
+echo hello > /opt/opt.txt
+echo hello > /mnt/mnt.txt
+echo hello > /media/media.txt

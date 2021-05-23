@@ -1,0 +1,48 @@
+
+resource "aws_ebs_snapshot" "terraform_snapshot1" {
+  volume_id = aws_ebs_volume.terraform_volume1.id
+
+  tags = {
+    Name = "OPT"
+  }
+
+  depends_on = [
+    aws_instance.UK,
+  ]
+}
+
+resource "aws_ebs_snapshot" "terraform_snapshot2" {
+  volume_id = aws_ebs_volume.terraform_volume1.id
+
+  tags = {
+    Name = "MNT"
+  }
+
+  depends_on = [
+    aws_instance.UK,
+  ]
+}
+
+resource "aws_ebs_snapshot" "terraform_snapshot3" {
+  volume_id = aws_ebs_volume.terraform_volume1.id
+
+  tags = {
+    Name = "MEDIA"
+  }
+
+  depends_on = [
+    aws_instance.UK,
+  ]
+}
+
+output "snapshot1" {
+  value = aws_ebs_snapshot.terraform_snapshot1.id
+}
+
+output "snapshot2" {
+  value = aws_ebs_snapshot.terraform_snapshot2.id
+}
+
+output "snapshot3" {
+  value = aws_ebs_snapshot.terraform_snapshot3.id
+}

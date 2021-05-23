@@ -1,0 +1,37 @@
+provider "aws" {
+   region = "us-east-1"
+}
+
+resource "aws_key_pair" "deployer" {
+  key_name = "ec2_user"
+  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCcpxINItoaBuVsSwMBR4bIaPEVJOhqBMIIttI+Vhtj8lsGsS1W9TgwNH69YSTTaLEt9/30So6enaVd9EnRKOWaEZj0V0qJ3Iz0DKzMF0qGHmNNQoX0RSpfpXUaVsrC10p+CbZpQiKSMAuAVBpxBnKLTLaadgUrdkHcMK+aK311J53NWjPQKVThzFJLKiyDYNKOZsFEkaycVSY0Qgr6ajt0cWTK9B3mIjsBSLdZ1k6njHmg3+UuhOGIgCVYhd4TD/tSixIbgtb977nl9OruFqk8UCsZX4lLeNG7kl8YU6UPGNYjDgGY3TrxCdbFoFbCvzJusm/NzzsBtsHeH4UCWAbwJ6gFZh08D0JOnse+h51EDN5FHmapM8kg4Igw8AqLD7Z4l6koOlnBcBnhqEGiAS1Dxp3aPpijafPRv20udAfhn5aVuTa8F9nVcCMirvSycjo95QosvcW4jDytNynCzVK23zVchSr6jMRSgMipWKmhd6AYg3pQa9h8sQVFafwyOFU= yaseen@LAPTOP-CA4B67VP"
+}
+
+resource "aws_instance" "UK" {
+   ami = "ami-038f1ca1bd58a5790"
+   instance_type = "t2.micro"
+   key_name = "ec2_user"
+   subnet_id = "subnet-0c865bcfbb29e1dd0"
+   security_groups = ["sg-0c719bff3f5387408"]
+
+   tags = {
+      name = "Jenkins Terrafrom test"
+      application_id = "UK"
+      desciption = "Terrform test ec2 instance"
+      ExcludeBackup = "true"
+   }
+ }
+
+output "terraform_instance_id" {
+  value = aws_instance.UK.id
+}
+
+resource "aws_ami_from_instance" "terraform-test-image" {
+  name = "terraform-test-image"
+  source_instance_id = aws_instance.UK.id
+}
+
+output "terraform_ami_id" {
+  value = aws_ami_from_instance.terraform-test-image.id
+}
+

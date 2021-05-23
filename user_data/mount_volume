@@ -1,0 +1,9 @@
+#!/bin/bash
+
+echo failed > /opt/failure.txt
+sleep 90
+
+mount /dev/xvdx /opt >> /opt/failure.txt
+mount /dev/xvdy /mnt >> /opt/failure.txt
+mount /dev/xvdz /media >> /opt/failure.txt
+

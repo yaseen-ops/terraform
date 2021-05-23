@@ -1,0 +1,32 @@
+resource "aws_volume_attachment" "terraform_attach_vol1" {
+  device_name = "/dev/sdx"
+  volume_id   = aws_ebs_volume.terraform_volume1.id
+  instance_id = aws_instance.UK.id
+  depends_on = [aws_instance.UK]
+}
+
+resource "aws_volume_attachment" "terraform_attach_vol2" {
+  device_name = "/dev/sdy"
+  volume_id   = aws_ebs_volume.terraform_volume2.id
+  instance_id = aws_instance.UK.id
+  depends_on = [aws_instance.UK]
+}
+
+resource "aws_volume_attachment" "terraform_attach_vol3" {
+  device_name = "/dev/sdz"
+  volume_id   = aws_ebs_volume.terraform_volume3.id
+  instance_id = aws_instance.UK.id
+  depends_on = [aws_instance.UK]
+}
+
+output "volume1" {
+   value = aws_ebs_volume.terraform_volume1.id
+}
+
+output "volume2" {
+   value = aws_ebs_volume.terraform_volume2.id
+}
+
+output "volume3" {
+   value = aws_ebs_volume.terraform_volume3.id
+}

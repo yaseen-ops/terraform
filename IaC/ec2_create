@@ -1,0 +1,66 @@
+data "aws_ami" "get_ami" {
+  owners = ["self"]
+  most_recent = true
+  filter {
+    name = "name"
+    values = ["AMI Created from Terraform"]
+  }
+}
+
+resource "aws_instance" "UK" {
+  ami = data.aws_ami.get_ami.id
+  instance_type = "t2.micro"
+  key_name = "ec2_user"
+  private_ip = var.ip_addr
+  #iam_instance_profile = "instance-terraform"
+  subnet_id = var.subnet_id
+  security_groups = [aws_security_group.allow_tls.id]
+  #user_data = file("user_data/mount_volume")
+
+  tags = {
+    name = var.name
+    application_id = var.application_id
+    description = var.description
+    created_by = var.created_by
+    environment = "dev"
+  }
+
+  root_block_device {
+    encrypted = true
+    #kms_key_id = "ec0373f0-7faa-4f12-8b16-b8b1cc494ba4"
+  }
+  ebs_block_device {
+    device_name = "/dev/sdx"
+    delete_on_termination = true
+    encrypted = true
+    #snapshot_id = var.vol1_snapshot
+    #kms_key_id = "ec0373f0-7faa-4f12-8b16-b8b1cc494ba4"
+  }
+  ebs_block_device {
+    device_name = "/dev/sdy"
+    delete_on_termination = true
+    encrypted = true
+    #snapshot_id = var.vol2_snapshot
+    #kms_key_id = "ec0373f0-7faa-4f12-8b16-b8b1cc494ba4"
+  }
+  ebs_block_device {
+    device_name = "/dev/sdz"
+    delete_on_termination = true
+    encrypted = true
+    #snapshot_id = var.vol3_snapshot
+    #kms_key_id = "ec0373f0-7faa-4f12-8b16-b8b1cc494ba4"
+  }
+
+  volume_tags = {
+    name = var.name
+    application_id = var.application_id
+    description = var.description
+    created_by = var.created_by
+  }
+}
+
+output "terraform_instance_id" {
+  value = aws_instance.UK.id
+}
+
+
