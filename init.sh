@@ -1,4 +1,4 @@
 . ~/.bashrc
 sh token
 terraform init
-t.apply tf_init
+terraform apply tf_init -auto-approve
