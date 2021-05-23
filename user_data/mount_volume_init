@@ -9,6 +9,22 @@ echo "/dev/xvdx /opt ext4 defaults.nofail 0 0" >> /etc/fstab
 echo "/dev/xvdy /mnt ext4 defaults.nofail 0 0" >> /etc/fstab
 echo "/dev/xvdz /media ext4 defaults.nofail 0 0" >> /etc/fstab
 
+mkfs.ext4 /dev/xvdx
+mkfs.ext4 /dev/xvdy
+mkfs.ext4 /dev/xvdz
+
+mount /dev/xvdx /opt
+mount /dev/xvdy /mnt
+mount /dev/xvdz /media
+
+sudo chmod -R 777 /opt
+sudo chmod -R 777 /mnt
+sudo chmod -R 777 /media
+echo hello > /opt/opt.txt
+echo hello > /mnt/mnt.txt
+echo hello > /media/media.txt
+
 sleep 10
 mount -a
 
+sh /root/t.sh $_token

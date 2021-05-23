@@ -1,5 +1,4 @@
 . ~/.bashrc
-terraform.exe init
+sh token
+terraform init
 t.apply tf_init
-ec2init
-mv terraform.tfstate init_terraform.tfstate
