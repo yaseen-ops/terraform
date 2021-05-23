@@ -15,18 +15,6 @@ resource "aws_instance" "UK" {
     created_by = var.created_by
   }
 
- provisioner "file" {
-    source = "C:/Users/yaseen/aws_practice/terraform/tf_init/snapshot_create"
-    destination = "/tmp/snapshot_create"
-
-    connection {
-      type = "ssh"
-      host = self.public_dns
-      user = "ec2-user"
-      private_key = file("~/.ssh/id_rsa")
-
-    }
-  }
 }
 
 output "terraform_instance_id" {
