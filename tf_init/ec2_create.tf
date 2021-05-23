@@ -5,7 +5,7 @@ resource "aws_instance" "UK" {
   private_ip = var.ip_addr
   #iam_instance_profile = "instance-terraform"
   subnet_id = var.subnet_id
-  security_groups = [aws_security_group.allow_tls.id]
+  security_groups = ["sg-010d65c8f101db65d"]
   user_data = file("user_data/mount_volume_init")
 
   tags = {
